@@ -13,7 +13,7 @@ Code to interface with the variational Latent Gaussian Process (vLGP) model [1] 
 
 NOTE: You must edit run_vlgp.py to specify the path to the vLGP codepack
 
-Usage example:
+### Usage example:
 
 from Matlab:
 
