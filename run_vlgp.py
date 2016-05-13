@@ -22,6 +22,10 @@ assert len(sys.argv)>=3, 'need to pass in a filename to load and an output filen
 spikefile = sys.argv[1]
 outfile = sys.argv[2]
 
+if len(sys.argv)>3:
+    nlatent = int(sys.argv[3])
+else:
+    nlatent = 3;
 
 import vlgp
 from vlgp import util, simulation, math, plot
@@ -40,14 +44,13 @@ sample = util.load(spikefile)
 import time
 start_time = time.time()
 
-nlatent = 3
 np.random.seed(0)
 sigma = np.full(nlatent, fill_value=1.0)
 omega = np.full(nlatent, fill_value=1e-5)
 fitted, _ = vlgp.fit(sample['y'], ['spike']*sample['y'].shape[-1], 
                      sigma, omega, 
                      lag=10, rank=100, 
-                     niter=300, tol=1e-6, adjhess=True, decay=0, verbose=False, learn_post=True, learn_param=True,
+                     niter=300, tol=1e-5, adjhess=True, decay=0, verbose=False, learn_post=True, learn_param=True,
                      learn_sigma=True, learn_omega=True, nhyper=5)
 
 ## if you want to pass in other variables, easy to add, e.g. add these lines above 
