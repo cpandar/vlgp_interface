@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+# calling syntax:
+# run_vlgp infile.hf5 outfile.hf5 [num_latents] [sigma]
+
 ## must specify where the vlgp code is
 #  (pull it from https://github.com/catniplab/vLGP)
 PATH_TO_VLGP = 'submodules/vLGP.git'
@@ -27,6 +30,11 @@ if len(sys.argv)>3:
 else:
     nlatent = 3;
 
+if len(sys.argv)>4:
+    sigma_val = int(sys.argv[4])
+else:
+    sigma_val = 1.0;
+
 import vlgp
 from vlgp import util, simulation, math, plot
 
@@ -45,7 +53,7 @@ import time
 start_time = time.time()
 
 np.random.seed(0)
-sigma = np.full(nlatent, fill_value=1.0)
+sigma = np.full(nlatent, fill_value=sigma_val)
 omega = np.full(nlatent, fill_value=1e-5)
 fitted, _ = vlgp.fit(sample['y'], ['spike']*sample['y'].shape[-1], 
                      sigma, omega, 
