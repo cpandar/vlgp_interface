@@ -5,7 +5,7 @@
 
 ## must specify where the vlgp code is
 #  (pull it from https://github.com/catniplab/vLGP)
-PATH_TO_VLGP = 'submodules/vLGP.git'
+PATH_TO_VLGP = 'submodules/vLGP'
 
 # add vlgp to module import path
 import sys
