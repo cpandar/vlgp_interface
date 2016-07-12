@@ -19,7 +19,7 @@ from scipy import stats
 from scipy import linalg
 
 
-# handlle command line args
+# handle command line args
 # caller should pass in a filename for data to be loaded
 assert len(sys.argv)>=3, 'need to pass in a filename to load and an output filename'
 spikefile = sys.argv[1]
