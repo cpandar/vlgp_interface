@@ -13,10 +13,11 @@ From Matlab:
 
 From the command line:
 
-```python run_vlgp.py outfile_for_spiking_data outfile_for_vlgp_results```
+```python run_vlgp.py outfile_for_spiking_data outfile_for_vlgp_results n_latents```
 
 - *outfile_for_spiking_data* - filename, output from previous step
 - *outfile_for_vlgp_results* - filename, will be written, stores the results of vLGP in an HDF5 file
+- *n_latents* - dimensionality of the LDS to fit
 
 
 Back in Matlab:
