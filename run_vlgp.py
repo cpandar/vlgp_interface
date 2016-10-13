@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 # calling syntax:
 # run_vlgp infile.hf5 outfile.hf5 [num_latents] [sigma] [omega]
