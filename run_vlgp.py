@@ -31,13 +31,13 @@ else:
     nlatent = 3;
 
 if len(sys.argv)>4:
-    sigma_val = int(sys.argv[4])
+    sigma_val = float(sys.argv[4])
 else:
     sigma_val = 1.0;
 
 
 if len(sys.argv)>5:
-    omega_val = int(sys.argv[5])
+    omega_val = float(sys.argv[5])
 else:
     omega_val = 1e-5;
 
@@ -59,13 +59,29 @@ import time
 start_time = time.time()
 
 np.random.seed(0)
-sigma = np.full(nlatent, fill_value=sigma_val)
-omega = np.full(nlatent, fill_value=omega_val)
-fitted, _ = vlgp.fit(sample['y'], ['spike']*sample['y'].shape[-1], 
-                     sigma, omega, 
-                     lag=10, rank=100, 
-                     niter=300, tol=1e-5, adjhess=True, decay=0, verbose=False, learn_post=True, learn_param=True,
-                     learn_sigma=True, learn_omega=True, nhyper=5)
+#sigma = np.full(nlatent, fill_value=sigma_val)
+#omega = np.full(nlatent, fill_value=omega_val)
+#fitted, _ = vlgp.fit(sample['y'], ['spike']*sample['y'].shape[-1], 
+#                     sigma, omega, 
+#                     lag=10, rank=100, 
+#                     niter=300, tol=1e-5, adjhess=True, decay=0, verbose=False, learn_post=True, learn_param=True,
+#                     learn_sigma=True, learn_omega=True, nhyper=5)
+
+binwidth = 1
+tau = 100
+dyn_ndim=nlatent
+fitted, _ = vlgp.fit(sample['y'], ['spike']*sample['y'].shape[-1],
+                     dyn_ndim,
+                     sigma=np.ones(dyn_ndim) * (1 - 1e-3), omega=np.ones(dyn_ndim)*(2*(binwidth/tau)**2),
+                     lag=0, rank=500,
+                     method='VB',
+                     niter=100, tol=1e-5, verbose=False,
+                     learn_param=True, learn_post=True, e_niter=5, m_niter=5,
+                     adjust_hessian=False, decay=0,Adam=False,
+                     learn_hyper=True, nhyper=5, subsample_size=200, hyper_obj='ELBO',
+                     gp_noise=1e-3, successive=False)
+#                     x=dyn, alpha=a, beta=b,
+
 
 ## if you want to pass in other variables, easy to add, e.g. add these lines above 
 #                     x=sample['x'],
